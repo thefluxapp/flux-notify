@@ -9,4 +9,6 @@ COPY . .
 RUN cargo build --release
 
 FROM alpine:latest
+RUN apk update
+RUN apk upgrade
 COPY --from=build /app/target/release/flux-notify /app/
