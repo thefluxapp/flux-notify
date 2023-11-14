@@ -2,14 +2,16 @@ use dotenv::dotenv;
 
 mod app;
 mod notifier;
+mod push_api;
 mod tracing;
 
 #[tokio::main]
 async fn main() {
     dotenv().ok();
 
-    tracing::run().await;
-    notifier::run().await.unwrap();
+    tracing::run();
 
-    app::run().await;
+    tokio::spawn(async { notifier::run().await.unwrap() });
+
+    app::run().await
 }
