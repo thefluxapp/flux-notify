@@ -2,6 +2,7 @@ use dotenv::dotenv;
 
 mod app;
 mod notifier;
+mod push_api;
 mod tracing;
 
 #[tokio::main]
