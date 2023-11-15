@@ -5,7 +5,7 @@ use std::env;
 use crate::push_api::{PushAPI, PushNotification};
 
 pub async fn run() -> Result<(), async_nats::Error> {
-    let client = async_nats::connect(env::var("NATS_ADDR").unwrap()).await?;
+    let client = async_nats::connect(env::var("FLUX_NATS_ADDR").unwrap()).await?;
     let push_api = PushAPI::new();
 
     let mut subscriber = client.subscribe("push-notifications").await?;
