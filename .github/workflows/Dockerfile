@@ -1,14 +1,13 @@
 FROM rust:1-alpine as build
 
 RUN apk update
-RUN apk add musl-dev openssl
-RUN apk add libressl-dev
+RUN apk --no-cache add musl-dev pkgconfig openssl-dev
 
 WORKDIR /app
 COPY . .
 RUN cargo build --release
 
 FROM alpine:latest
-RUN apk update
-RUN apk upgrade
+RUN apk --no-cache upgrade
+RUN apk --no-cache add gcc
 COPY --from=build /app/target/release/flux-notify /app/
