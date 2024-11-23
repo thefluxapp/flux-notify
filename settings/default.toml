@@ -1,0 +1,4 @@
+_name = "flux-notify"
+
+[http]
+endpoint = "0.0.0.0:3000"
