@@ -10,15 +10,20 @@ resolver = "2"
 
 [dependencies]
 flux-notify-api = { path = "lib/api" }
+flux-core-api = { path = "../flux-core/lib/api" }
 
 anyhow = "1.0.93"
 thiserror = "2.0.3"
-config = "0.14.1"
+config = { version = "0.14", default-features = false, features = ["toml"] }
 
 axum = "0.7.9"
 
-tokio = { version = "1.41.1", features = ["full"] }
+async-nats = "0.38.0"
 
+tokio = { version = "1.41.1", features = ["full"] }
+tokio-stream = { version = "0.1.16", features = ["sync"] }
+
+prost = "0.13.3"
 tonic = "0.12.3"
 tonic-health = "0.12.3"
 tonic-reflection = "0.12.3"

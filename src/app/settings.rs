@@ -3,15 +3,25 @@ use std::env;
 use config::{Config, ConfigError, Environment, File};
 use serde::Deserialize;
 
+use super::notify::settings::NotifySettings;
+
 #[derive(Deserialize, Clone)]
 pub struct AppSettings {
     pub _name: String,
     pub http: HttpSettings,
+    pub nats: NATSSettings,
+    pub notify: NotifySettings,
 }
 
 #[derive(Deserialize, Clone)]
 pub struct HttpSettings {
     pub endpoint: String,
+}
+
+#[derive(Deserialize, Clone)]
+pub struct NATSSettings {
+    pub endpoint: String,
+    pub stream: String,
 }
 
 impl AppSettings {

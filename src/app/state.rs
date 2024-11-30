@@ -1,14 +1,28 @@
-use anyhow::Error;
+use std::sync::Arc;
 
-use super::settings::AppSettings;
+use anyhow::Error;
+use async_nats::jetstream;
+
+use super::{notify::state::NotifyState, settings::AppSettings, AppJS};
 
 #[derive(Clone)]
 pub struct AppState {
     pub settings: AppSettings,
+    pub js: Arc<AppJS>,
+    pub notify: NotifyState,
 }
 
 impl AppState {
     pub async fn new(settings: AppSettings) -> Result<Self, Error> {
-        Ok(Self { settings })
+        let nats = async_nats::connect(&settings.nats.endpoint).await.unwrap();
+        let js = Arc::new(jetstream::new(nats));
+
+        let notify = NotifyState::new(settings.notify.clone());
+
+        Ok(Self {
+            settings,
+            js,
+            notify,
+        })
     }
 }

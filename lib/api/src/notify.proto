@@ -1,14 +1,2 @@
 syntax = "proto3";
 package flux.notify;
-
-service NotifyService {
-    rpc Example(ExampleRequest) returns (ExampleResponse);
-}
-
-message ExampleRequest {
-    optional string query = 1;
-}
-
-message ExampleResponse {
-    optional string data = 1;
-}
