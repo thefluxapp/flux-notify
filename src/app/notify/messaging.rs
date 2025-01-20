@@ -50,6 +50,7 @@ pub mod create_message {
     pub struct Event {
         pub message_id: String,
         pub text: String,
+        pub code: String,
     }
 
     impl From<flux_core_api::notify_message::Message> for Event {
@@ -57,6 +58,7 @@ pub mod create_message {
             Self {
                 message_id: message.message_id().into(),
                 text: message.text().into(),
+                code: message.code().into(),
             }
         }
     }
