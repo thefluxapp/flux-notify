@@ -1,0 +1,12 @@
+syntax = "proto3";
+package flux.push;
+
+service PushService {
+    rpc GetVapid(GetVapidRequest) returns (GetVapidResponse);
+}
+
+message GetVapidRequest {}
+
+message GetVapidResponse {
+    optional string public_key = 1;
+}

@@ -3,14 +3,14 @@ use std::env;
 use config::{Config, ConfigError, Environment, File};
 use serde::Deserialize;
 
-use super::notify::settings::NotifySettings;
+use super::push::settings::PushSettings;
 
 #[derive(Deserialize, Clone)]
 pub struct AppSettings {
     pub _name: String,
     pub http: HttpSettings,
     pub nats: NATSSettings,
-    pub notify: NotifySettings,
+    pub push: PushSettings,
 }
 
 #[derive(Deserialize, Clone)]
