@@ -16,6 +16,7 @@ flux-lib = { git = "https://github.com/thefluxapp/flux-lib.git" }
 anyhow = "1.0.95"
 thiserror = "2.0.11"
 config = { version = "0.14", default-features = false, features = ["toml"] }
+uuid = { version = "1.12.1", features = ["v7"] }
 
 axum = "0.7.9"
 

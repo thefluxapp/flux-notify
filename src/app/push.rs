@@ -4,6 +4,7 @@ use grpc::GrpcPushService;
 use super::state::AppState;
 
 mod grpc;
+mod repo;
 mod service;
 pub(super) mod settings;
 

@@ -13,3 +13,22 @@ pub mod get_vapid {
         pub public_key: String,
     }
 }
+
+pub async fn create_web_push(req: create_web_push::Request) -> Result<(), AppError> {
+    dbg!(&req);
+
+    Ok(())
+}
+
+pub mod create_web_push {
+    use uuid::Uuid;
+
+    #[derive(Debug)]
+    pub struct Request {
+        pub endpoint: String,
+        pub public_key: String,
+        pub authentication_secret: String,
+        pub device_id: String,
+        pub user_id: Uuid,
+    }
+}

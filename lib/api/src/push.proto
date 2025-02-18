@@ -3,6 +3,7 @@ package flux.push;
 
 service PushService {
     rpc GetVapid(GetVapidRequest) returns (GetVapidResponse);
+    rpc CreateWebPush(CreateWebPushRequest) returns (CreateWebPushResponse);
 }
 
 message GetVapidRequest {}
@@ -10,3 +11,13 @@ message GetVapidRequest {}
 message GetVapidResponse {
     optional string public_key = 1;
 }
+
+message CreateWebPushRequest {
+    optional string endpoint = 1;
+    optional string authentication_secret = 2;
+    optional string public_key = 3;
+    optional string device_id = 4;
+    optional string user_id = 5;
+}
+
+message CreateWebPushResponse {}

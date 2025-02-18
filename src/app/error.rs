@@ -13,6 +13,7 @@ impl From<AppError> for Status {
         match error {
             AppError::Other(error) => Self::internal(error.to_string()),
             AppError::DUMMY => todo!(),
+            AppError::UUID(_) => todo!(),
         }
     }
 }
@@ -21,6 +22,8 @@ impl From<AppError> for Status {
 pub enum AppError {
     #[error("entity not found")]
     DUMMY,
+    #[error(transparent)]
+    UUID(#[from] uuid::Error),
     #[error(transparent)]
     Other(#[from] anyhow::Error),
 }
