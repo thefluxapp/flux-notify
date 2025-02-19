@@ -1,5 +1,4 @@
 use anyhow::Error;
-use async_nats::jetstream;
 use axum::Router;
 use settings::AppSettings;
 use state::AppState;
@@ -43,8 +42,8 @@ async fn http_and_grpc(state: &AppState) -> Result<(), Error> {
     Ok(())
 }
 
-async fn messaging(state: &AppState) -> Result<(), Error> {
+async fn messaging(_: &AppState) -> Result<(), Error> {
     Ok(())
 }
 
-pub type AppJS = jetstream::Context;
+// pub type AppJS = jetstream::Context;

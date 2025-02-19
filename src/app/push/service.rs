@@ -1,6 +1,10 @@
+use chrono::Utc;
+use sea_orm::DbConn;
+use uuid::Uuid;
+
 use crate::app::error::AppError;
 
-use super::settings::VapidSettings;
+use super::{repo, settings::VapidSettings};
 
 pub(super) fn get_vapid(settings: &VapidSettings) -> Result<get_vapid::Response, AppError> {
     Ok(get_vapid::Response {
@@ -14,8 +18,20 @@ pub mod get_vapid {
     }
 }
 
-pub async fn create_web_push(req: create_web_push::Request) -> Result<(), AppError> {
-    dbg!(&req);
+pub async fn create_web_push(db: &DbConn, req: create_web_push::Request) -> Result<(), AppError> {
+    repo::create_web_push(db, {
+        repo::web_push::Model {
+            id: Uuid::now_v7(),
+            user_id: req.user_id,
+            device_id: req.device_id,
+            endpoint: req.endpoint,
+            public_key: req.public_key,
+            authentication_secret: req.authentication_secret,
+            created_at: Utc::now().naive_utc(),
+            updated_at: Utc::now().naive_utc(),
+        }
+    })
+    .await?;
 
     Ok(())
 }

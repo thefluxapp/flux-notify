@@ -1,28 +1,25 @@
 use std::sync::Arc;
 
 use anyhow::Error;
-use async_nats::jetstream;
+use sea_orm::{ConnectOptions, Database, DbConn};
 
-use super::{settings::AppSettings, AppJS};
+use super::settings::AppSettings;
 
 #[derive(Clone)]
 pub struct AppState {
     pub settings: AppSettings,
-    pub js: Arc<AppJS>,
-    // pub notify: NotifyState,
+    // pub js: Arc<AppJS>,
+    pub db: Arc<DbConn>,
 }
 
 impl AppState {
     pub async fn new(settings: AppSettings) -> Result<Self, Error> {
-        let nats = async_nats::connect(&settings.nats.endpoint).await.unwrap();
-        let js = Arc::new(jetstream::new(nats));
+        // let nats = async_nats::connect(&settings.nats.endpoint).await.unwrap();
+        // let js = Arc::new(jetstream::new(nats));
 
-        // let notify = NotifyState::new(settings.notify.clone());
+        let opt = ConnectOptions::new(&settings.db.endpoint);
+        let db = Arc::new(Database::connect(opt).await?);
 
-        Ok(Self {
-            settings,
-            js,
-            // notify,
-        })
+        Ok(Self { settings, db })
     }
 }

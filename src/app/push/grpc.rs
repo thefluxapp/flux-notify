@@ -33,7 +33,7 @@ impl PushService for GrpcPushService {
         &self,
         req: Request<CreateWebPushRequest>,
     ) -> Result<Response<CreateWebPushResponse>, Status> {
-        create_web_push(req.into_inner())?;
+        create_web_push(&self.state, req.into_inner()).await?;
 
         Ok(Response::new(CreateWebPushResponse::default()))
     }
@@ -59,8 +59,11 @@ mod get_vapid {
     }
 }
 
-fn create_web_push(req: CreateWebPushRequest) -> Result<(), AppError> {
-    service::create_web_push(req.try_into()?);
+async fn create_web_push(
+    AppState { db, .. }: &AppState,
+    req: CreateWebPushRequest,
+) -> Result<(), AppError> {
+    service::create_web_push(db, req.try_into()?).await?;
 
     Ok(())
 }
