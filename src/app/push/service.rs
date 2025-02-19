@@ -6,7 +6,7 @@ use crate::app::error::AppError;
 
 use super::{repo, settings::VapidSettings};
 
-pub(super) fn get_vapid(settings: &VapidSettings) -> Result<get_vapid::Response, AppError> {
+pub fn get_vapid(settings: &VapidSettings) -> Result<get_vapid::Response, AppError> {
     Ok(get_vapid::Response {
         public_key: settings.public_key.clone(),
     })
@@ -46,5 +46,36 @@ pub mod create_web_push {
         pub authentication_secret: String,
         pub device_id: String,
         pub user_id: Uuid,
+    }
+}
+
+pub async fn get_web_pushes(
+    db: &DbConn,
+    req: get_web_pushes::Request,
+) -> Result<get_web_pushes::Response, AppError> {
+    let web_pushes = repo::find_web_pushes_by_user_id(db, req.user_id).await?;
+
+    Ok(web_pushes.into())
+}
+
+pub mod get_web_pushes {
+    use uuid::Uuid;
+
+    use crate::app::push::repo;
+
+    pub struct Request {
+        pub user_id: Uuid,
+    }
+
+    pub struct Response {
+        pub device_ids: Vec<String>,
+    }
+
+    impl From<Vec<repo::web_push::Model>> for Response {
+        fn from(web_pushes: Vec<repo::web_push::Model>) -> Self {
+            Self {
+                device_ids: web_pushes.into_iter().map(|wp| wp.device_id).collect(),
+            }
+        }
     }
 }

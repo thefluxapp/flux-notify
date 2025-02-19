@@ -1,4 +1,8 @@
-use sea_orm::{sea_query::OnConflict, ConnectionTrait, EntityTrait as _, IntoActiveModel as _};
+use sea_orm::{
+    sea_query::OnConflict, ColumnTrait as _, ConnectionTrait, EntityTrait as _,
+    IntoActiveModel as _, Order, QueryFilter as _, QueryOrder as _,
+};
+use uuid::Uuid;
 
 use crate::app::error::AppError;
 
@@ -22,4 +26,17 @@ pub async fn create_web_push<T: ConnectionTrait>(
         .exec(db)
         .await?;
     Ok(())
+}
+
+pub async fn find_web_pushes_by_user_id<T: ConnectionTrait>(
+    db: &T,
+    user_id: Uuid,
+) -> Result<Vec<web_push::Model>, AppError> {
+    let web_pushes = web_push::Entity::find()
+        .filter(web_push::Column::UserId.eq(user_id))
+        .order_by(web_push::Column::Id, Order::Asc)
+        .all(db)
+        .await?;
+
+    Ok(web_pushes)
 }

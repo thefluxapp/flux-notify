@@ -4,6 +4,7 @@ package flux.push;
 service PushService {
     rpc GetVapid(GetVapidRequest) returns (GetVapidResponse);
     rpc CreateWebPush(CreateWebPushRequest) returns (CreateWebPushResponse);
+    rpc GetWebPushes(GetWebPushesRequest) returns (GetWebPushesResponse);
 }
 
 message GetVapidRequest {}
@@ -21,3 +22,11 @@ message CreateWebPushRequest {
 }
 
 message CreateWebPushResponse {}
+
+message GetWebPushesRequest {
+    optional string user_id = 1;
+}
+
+message GetWebPushesResponse {
+    repeated string device_ids = 1;
+}
