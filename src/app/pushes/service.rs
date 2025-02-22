@@ -61,7 +61,7 @@ pub async fn get_web_pushes(
 pub mod get_web_pushes {
     use uuid::Uuid;
 
-    use crate::app::push::repo;
+    use crate::app::pushes::repo;
 
     pub struct Request {
         pub user_id: Uuid,

@@ -4,7 +4,7 @@ use config::{Config, ConfigError, Environment, File};
 use flux_lib::settings::{DBSettings, HttpSettings};
 use serde::Deserialize;
 
-use super::push::settings::PushSettings;
+use super::pushes::settings::PushSettings;
 
 #[derive(Deserialize, Clone)]
 pub struct AppSettings {

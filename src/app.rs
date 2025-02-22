@@ -5,7 +5,7 @@ use state::AppState;
 use tonic::service::Routes;
 
 mod error;
-mod push;
+mod pushes;
 mod settings;
 mod state;
 
@@ -32,7 +32,7 @@ async fn http_and_grpc(state: &AppState) -> Result<(), Error> {
     let router = routes
         .add_service(reflection_service)
         .add_service(health_service)
-        .add_service(push::push_service(state.clone()))
+        .add_service(pushes::push_service(state.clone()))
         .into_axum_router();
 
     let listener = tokio::net::TcpListener::bind(&state.settings.http.endpoint).await?;

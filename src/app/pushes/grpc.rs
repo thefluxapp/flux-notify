@@ -57,7 +57,7 @@ fn get_vapid(
 mod get_vapid {
     use flux_notify_api::GetVapidResponse;
 
-    use crate::app::push::service::get_vapid::Response;
+    use crate::app::pushes::service::get_vapid::Response;
 
     impl From<Response> for GetVapidResponse {
         fn from(res: Response) -> Self {
@@ -78,7 +78,7 @@ async fn create_web_push(
 }
 
 mod create_web_push {
-    use crate::app::{error::AppError, push::service};
+    use crate::app::{error::AppError, pushes::service};
     use flux_notify_api::CreateWebPushRequest;
     use uuid::Uuid;
 
@@ -108,7 +108,7 @@ mod get_web_pushes {
     use flux_notify_api::{GetWebPushesRequest, GetWebPushesResponse};
     use uuid::Uuid;
 
-    use crate::app::{error::AppError, push::service};
+    use crate::app::{error::AppError, pushes::service};
 
     impl TryFrom<GetWebPushesRequest> for service::get_web_pushes::Request {
         type Error = AppError;
