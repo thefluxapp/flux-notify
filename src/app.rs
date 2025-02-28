@@ -1,5 +1,7 @@
 use anyhow::Error;
+use async_nats::jetstream;
 use axum::Router;
+use log::info;
 use settings::AppSettings;
 use state::AppState;
 use tonic::service::Routes;
@@ -42,8 +44,12 @@ async fn http_and_grpc(state: &AppState) -> Result<(), Error> {
     Ok(())
 }
 
-async fn messaging(_: &AppState) -> Result<(), Error> {
+async fn messaging(state: &AppState) -> Result<(), Error> {
+    pushes::messaging(&state).await.unwrap();
+
+    info!("messaging: started");
+
     Ok(())
 }
 
-// pub type AppJS = jetstream::Context;
+pub type AppJS = jetstream::Context;

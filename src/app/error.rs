@@ -1,3 +1,5 @@
+use std::string::FromUtf8Error;
+
 use async_nats::jetstream::stream::ConsumerErrorKind;
 use sea_orm::DbErr;
 use thiserror::Error;
@@ -15,6 +17,7 @@ impl From<AppError> for Status {
             AppError::Other(error) => Self::internal(error.to_string()),
             AppError::DUMMY => todo!(),
             AppError::UUID(_) => todo!(),
+            AppError::UTF8(_) => todo!(),
             AppError::DB(err) => {
                 dbg!(&err);
                 todo!()
@@ -31,6 +34,8 @@ pub enum AppError {
     UUID(#[from] uuid::Error),
     #[error(transparent)]
     DB(#[from] DbErr),
+    #[error(transparent)]
+    UTF8(#[from] FromUtf8Error),
     #[error(transparent)]
     Other(#[from] anyhow::Error),
 }

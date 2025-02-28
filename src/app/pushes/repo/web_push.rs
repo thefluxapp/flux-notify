@@ -9,8 +9,8 @@ pub struct Model {
     pub user_id: Uuid,
     pub device_id: String,
     pub endpoint: String,
-    pub public_key: String,
-    pub authentication_secret: String,
+    pub public_key: Vec<u8>,
+    pub authentication_secret: Vec<u8>,
     pub created_at: DateTime,
     pub updated_at: DateTime,
 }

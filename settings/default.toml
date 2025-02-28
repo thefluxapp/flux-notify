@@ -10,9 +10,10 @@ stream = "flux"
 [db]
 endpoint = "postgres://postgres:postgres@0.0.0.0:5432/flux-notify"
 
-[notify]
-capacity = 256
+[pushes.vapid]
+sub = "pushes@theflux.app"
+ttl = 3600
 
-[notify.messaging.message]
+[pushes.messaging.message]
 subjects = ["flux.messages.message"]
 consumer = "flux-notify-notify-message"

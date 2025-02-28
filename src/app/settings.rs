@@ -1,25 +1,19 @@
 use std::env;
 
 use config::{Config, ConfigError, Environment, File};
-use flux_lib::settings::{DBSettings, HttpSettings};
+use flux_lib::settings::{DBSettings, HttpSettings, NATSSettings};
 use serde::Deserialize;
 
-use super::pushes::settings::PushSettings;
+use super::pushes::settings::PushesSettings;
 
 #[derive(Deserialize, Clone)]
 pub struct AppSettings {
     pub _name: String,
     pub http: HttpSettings,
-    // pub nats: NATSSettings,
+    pub nats: NATSSettings,
     pub db: DBSettings,
-    pub push: PushSettings,
+    pub pushes: PushesSettings,
 }
-
-// #[derive(Deserialize, Clone)]
-// pub struct NATSSettings {
-//     pub endpoint: String,
-//     pub stream: String,
-// }
 
 impl AppSettings {
     pub fn new() -> Result<Self, ConfigError> {

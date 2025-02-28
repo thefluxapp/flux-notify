@@ -13,8 +13,8 @@ impl MigrationTrait for Migration {
                     .col(uuid(WebPushes::UserId))
                     .col(text(WebPushes::DeviceId))
                     .col(text(WebPushes::Endpoint))
-                    .col(text(WebPushes::PublicKey))
-                    .col(text(WebPushes::AuthenticationSecret))
+                    .col(binary(WebPushes::PublicKey))
+                    .col(binary(WebPushes::AuthenticationSecret))
                     .to_owned(),
             )
             .await?;

@@ -26,7 +26,7 @@ impl PushService for GrpcPushService {
     ) -> Result<Response<GetVapidResponse>, Status> {
         let res = get_vapid(&self.state)?;
 
-        Ok(Response::new(res.into()))
+        Ok(Response::new(res.try_into()?))
     }
 
     async fn create_web_push(
@@ -49,21 +49,23 @@ impl PushService for GrpcPushService {
 }
 
 fn get_vapid(
-    AppState { settings, .. }: &AppState,
+    AppState { pushes_state, .. }: &AppState,
 ) -> Result<service::get_vapid::Response, AppError> {
-    Ok(service::get_vapid(&settings.push.vapid)?)
+    Ok(service::get_vapid(pushes_state)?)
 }
 
 mod get_vapid {
     use flux_notify_api::GetVapidResponse;
 
-    use crate::app::pushes::service::get_vapid::Response;
+    use crate::app::{error::AppError, pushes::service::get_vapid::Response};
 
-    impl From<Response> for GetVapidResponse {
-        fn from(res: Response) -> Self {
-            Self {
+    impl TryFrom<Response> for GetVapidResponse {
+        type Error = AppError;
+
+        fn try_from(res: Response) -> Result<Self, Self::Error> {
+            Ok(Self {
                 public_key: Some(res.public_key),
-            }
+            })
         }
     }
 }

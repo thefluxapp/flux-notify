@@ -19,6 +19,7 @@ pub async fn create_web_push<T: ConnectionTrait>(
                     web_push::Column::Endpoint,
                     web_push::Column::AuthenticationSecret,
                     web_push::Column::PublicKey,
+                    web_push::Column::UpdatedAt,
                 ])
                 .to_owned(),
         )
@@ -28,12 +29,12 @@ pub async fn create_web_push<T: ConnectionTrait>(
     Ok(())
 }
 
-pub async fn find_web_pushes_by_user_id<T: ConnectionTrait>(
+pub async fn find_web_pushes_by_user_ids<T: ConnectionTrait>(
     db: &T,
-    user_id: Uuid,
+    user_ids: Vec<Uuid>,
 ) -> Result<Vec<web_push::Model>, AppError> {
     let web_pushes = web_push::Entity::find()
-        .filter(web_push::Column::UserId.eq(user_id))
+        .filter(web_push::Column::UserId.is_in(user_ids))
         .order_by(web_push::Column::Id, Order::Asc)
         .all(db)
         .await?;
