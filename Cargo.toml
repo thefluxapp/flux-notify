@@ -13,12 +13,12 @@ flux-notify-api = { path = "lib/api" }
 flux-messages-api = { git = "https://github.com/thefluxapp/flux-messages.git" }
 flux-lib = { git = "https://github.com/thefluxapp/flux-lib.git" }
 
-anyhow = "1.0.95"
+anyhow = "1.0.96"
 thiserror = "2.0.11"
-config = { version = "0.14", default-features = false, features = ["toml"] }
-uuid = { version = "1.12.1", features = ["v7"] }
-chrono = "0.4.39"
-log = "0.4.22"
+config = { version = "0.15", default-features = false, features = ["toml"] }
+uuid = { version = "1.15.1", features = ["v7"] }
+chrono = "0.4.40"
+log = "0.4.26"
 jsonwebtoken = "9.3.1"
 ece = "2.3.1"
 base64 = "0.22.1"
@@ -26,25 +26,25 @@ p256 = "0.13.2"
 
 axum = "0.7.9"
 
-async-nats = "0.38.0"
+async-nats = "0.39.0"
 
 tokio = { version = "1.43.0", features = ["full"] }
 tokio-stream = { version = "0.1.17", features = ["sync"] }
 
-reqwest = { version = "0.12.7", default-features = false, features = [
+reqwest = { version = "0.12.12", default-features = false, features = [
   "json",
   "rustls-tls",
 ] }
 
-prost = "0.13.4"
+prost = "0.13.5"
 tonic = "0.12.3"
 tonic-health = "0.12.3"
 tonic-reflection = "0.12.3"
 
-sea-orm = { version = "1.1.5", features = [
+sea-orm = { version = "1.1.6", features = [
   "sqlx-postgres",
   "runtime-tokio-rustls",
 ] }
 
-serde = { version = "1.0.217", features = ["derive"] }
-serde_json = "1.0.137"
+serde = { version = "1.0.218", features = ["derive"] }
+serde_json = "1.0.139"
