@@ -1,41 +1,19 @@
-use std::string::FromUtf8Error;
-
-use async_nats::jetstream::stream::ConsumerErrorKind;
-use sea_orm::DbErr;
 use thiserror::Error;
 use tonic::Status;
 
-impl From<async_nats::error::Error<ConsumerErrorKind>> for AppError {
-    fn from(_: async_nats::error::Error<ConsumerErrorKind>) -> Self {
-        Self::DUMMY
-    }
-}
-
 impl From<AppError> for Status {
-    fn from(error: AppError) -> Self {
-        match error {
-            AppError::Other(error) => Self::internal(error.to_string()),
-            AppError::DUMMY => todo!(),
-            AppError::UUID(_) => todo!(),
-            AppError::UTF8(_) => todo!(),
-            AppError::DB(err) => {
-                dbg!(&err);
-                todo!()
-            }
+    fn from(err: AppError) -> Self {
+        match err {
+            AppError::UUID(err) => Self::invalid_argument(err.to_string()),
+            err => Self::internal(err.to_string()),
         }
     }
 }
 
 #[derive(Error, Debug)]
 pub enum AppError {
-    #[error("entity not found")]
-    DUMMY,
     #[error(transparent)]
     UUID(#[from] uuid::Error),
     #[error(transparent)]
-    DB(#[from] DbErr),
-    #[error(transparent)]
-    UTF8(#[from] FromUtf8Error),
-    #[error(transparent)]
-    Other(#[from] anyhow::Error),
+    DB(#[from] sea_orm::DbErr),
 }

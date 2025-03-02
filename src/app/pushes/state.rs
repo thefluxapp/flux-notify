@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use anyhow::Error;
+use flux_lib::error::Error;
 use p256::pkcs8::{DecodePrivateKey as _, DecodePublicKey as _};
 use tokio::fs;
 

@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
-use anyhow::Error;
 use async_nats::jetstream;
+use flux_lib::error::Error;
 use sea_orm::{ConnectOptions, Database, DbConn};
 
 use super::{pushes::state::PushesState, settings::AppSettings, AppJS};
@@ -16,7 +16,7 @@ pub struct AppState {
 
 impl AppState {
     pub async fn new(settings: AppSettings) -> Result<Self, Error> {
-        let nats = async_nats::connect(&settings.nats.endpoint).await.unwrap();
+        let nats = async_nats::connect(&settings.nats.endpoint).await?;
         let js = Arc::new(jetstream::new(nats));
 
         let opt = ConnectOptions::new(&settings.db.endpoint);

@@ -1,6 +1,6 @@
-use anyhow::Error;
 use async_nats::jetstream;
 use axum::Router;
+use flux_lib::error::Error;
 use log::info;
 use settings::AppSettings;
 use state::AppState;
@@ -45,7 +45,7 @@ async fn http_and_grpc(state: &AppState) -> Result<(), Error> {
 }
 
 async fn messaging(state: &AppState) -> Result<(), Error> {
-    pushes::messaging(&state).await.unwrap();
+    pushes::messaging(&state).await;
 
     info!("messaging: started");
 

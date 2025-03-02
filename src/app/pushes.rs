@@ -1,7 +1,7 @@
 use flux_notify_api::push_service_server::PushServiceServer;
 use grpc::GrpcPushService;
 
-use super::{error::AppError, state::AppState};
+use super::state::AppState;
 
 mod grpc;
 mod messaging;
@@ -15,8 +15,6 @@ pub fn push_service(state: AppState) -> PushServiceServer<GrpcPushService> {
     PushServiceServer::new(GrpcPushService::new(state))
 }
 
-pub async fn messaging(state: &AppState) -> Result<(), AppError> {
+pub async fn messaging(state: &AppState) {
     tokio::spawn(messaging::message(state.clone()));
-
-    Ok(())
 }

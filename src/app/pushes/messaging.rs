@@ -1,5 +1,5 @@
-use anyhow::Error;
 use async_nats::jetstream::consumer::pull::Config;
+use flux_lib::error::Error;
 use log::error;
 use prost::Message as _;
 use tokio_stream::StreamExt as _;

@@ -1,8 +1,8 @@
-use anyhow::Error;
 use axum::http::uri::Builder;
 use axum::http::Uri;
 use base64::{engine::general_purpose::URL_SAFE_NO_PAD, Engine as _};
 use chrono::{Duration, Utc};
+use flux_lib::error::Error;
 use jsonwebtoken::{EncodingKey, Header};
 use p256::pkcs8::EncodePrivateKey;
 

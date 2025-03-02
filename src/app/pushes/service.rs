@@ -1,4 +1,5 @@
 use chrono::Utc;
+use flux_lib::error::Error;
 use log::debug;
 use sea_orm::DbConn;
 use uuid::Uuid;
@@ -87,7 +88,7 @@ pub async fn send_web_push(
     db: &DbConn,
     vapid: &Vapid,
     req: send_web_push::Request,
-) -> Result<(), AppError> {
+) -> Result<(), Error> {
     let web_pushes = repo::find_web_pushes_by_user_ids(
         db,
         req.user_ids
