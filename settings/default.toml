@@ -1,0 +1,19 @@
+_name = "flux-notify"
+
+[http]
+endpoint = "0.0.0.0:3000"
+
+[nats]
+endpoint = "0.0.0.0:4222"
+stream = "flux"
+
+[db]
+endpoint = "postgres://postgres:postgres@0.0.0.0:5432/flux-notify"
+
+[pushes.vapid]
+sub = "pushes@theflux.app"
+ttl = 3600
+
+[pushes.messaging.message]
+subjects = ["flux.messages.message"]
+consumer = "flux-notify-notify-message"

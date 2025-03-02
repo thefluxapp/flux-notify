@@ -1,0 +1,32 @@
+syntax = "proto3";
+package flux.push;
+
+service PushService {
+    rpc GetVapid(GetVapidRequest) returns (GetVapidResponse);
+    rpc CreateWebPush(CreateWebPushRequest) returns (CreateWebPushResponse);
+    rpc GetWebPushes(GetWebPushesRequest) returns (GetWebPushesResponse);
+}
+
+message GetVapidRequest {}
+
+message GetVapidResponse {
+    optional bytes public_key = 1;
+}
+
+message CreateWebPushRequest {
+    optional string endpoint = 1;
+    optional bytes authentication_secret = 2;
+    optional bytes public_key = 3;
+    optional string device_id = 4;
+    optional string user_id = 5;
+}
+
+message CreateWebPushResponse {}
+
+message GetWebPushesRequest {
+    optional string user_id = 1;
+}
+
+message GetWebPushesResponse {
+    repeated string device_ids = 1;
+}

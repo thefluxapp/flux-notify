@@ -1,1 +1,4 @@
 /target
+/local
+/tmp
+/settings/local.toml
