@@ -40,7 +40,7 @@ impl Vapid {
         public_key: Vec<u8>,
     ) -> Result<Response, Error> {
         // TODO: Swith to native instead of openssl
-        let ciphertext = ece::encrypt(&public_key, &auth, &data).unwrap();
+        let ciphertext = ece::encrypt(&public_key, &auth, &data)?;
         let claims = VapidClaims::new(endpoint.clone().try_into()?, self.sub.clone(), self.ttl)?;
         let jwt = self.create_jwt(claims).await?;
 
@@ -103,18 +103,21 @@ impl VapidClaims {
 
 #[cfg(test)]
 mod tests {
+    use flux_lib::error::Error;
+
     use super::VapidClaims;
 
     #[test]
-    fn test_path_is_ok() {
+    fn test_path_is_ok() -> Result<(), Error> {
         let claims = VapidClaims::new(
-            "https://example.com/path?query".try_into().unwrap(),
+            "https://example.com/path?query".try_into()?,
             "sub".into(),
             0,
-        )
-        .unwrap();
+        )?;
 
         assert_eq!(claims.aud, "https://example.com");
         assert_eq!(claims.sub, "sub");
+
+        Ok(())
     }
 }
