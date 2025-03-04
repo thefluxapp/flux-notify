@@ -11,7 +11,7 @@ stream = "flux"
 endpoint = "postgres://postgres:postgres@0.0.0.0:5432/flux-notify"
 
 [pushes.vapid]
-sub = "pushes@theflux.app"
+sub = "mailto:pushes@theflux.app"
 ttl = 3600
 
 [pushes.messaging.message]

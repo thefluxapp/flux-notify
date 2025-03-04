@@ -2,6 +2,7 @@ use chrono::Utc;
 use flux_lib::error::Error;
 use log::debug;
 use sea_orm::DbConn;
+use serde_json::json;
 use uuid::Uuid;
 
 use crate::app::error::AppError;
@@ -105,10 +106,15 @@ pub async fn send_web_push(
 
         vapid
             .send(
-                req.text.clone().into(),
+                json!(send_web_push::Data {
+                    title: req.text.clone(),
+                })
+                .to_string()
+                .into(),
                 web_push.endpoint,
                 web_push.authentication_secret,
                 web_push.public_key,
+                req.stream_id.as_simple().to_string(),
             )
             .await?;
     }
@@ -117,12 +123,19 @@ pub async fn send_web_push(
 }
 
 pub mod send_web_push {
+    use serde::Serialize;
     use uuid::Uuid;
 
     #[derive(Debug)]
     pub struct Request {
         pub text: String,
         pub user_id: Uuid,
+        pub stream_id: Uuid,
         pub user_ids: Vec<Uuid>,
+    }
+
+    #[derive(Serialize)]
+    pub struct Data {
+        pub title: String,
     }
 }
