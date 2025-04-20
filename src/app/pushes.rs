@@ -15,6 +15,6 @@ pub fn push_service(state: AppState) -> PushServiceServer<GrpcPushService> {
     PushServiceServer::new(GrpcPushService::new(state))
 }
 
-pub async fn messaging(state: &AppState) {
+pub fn messaging(state: &AppState) {
     tokio::spawn(messaging::message(state.clone()));
 }

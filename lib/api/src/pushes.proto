@@ -1,5 +1,5 @@
 syntax = "proto3";
-package flux.push;
+package flux.pushes;
 
 service PushService {
     rpc GetVapid(GetVapidRequest) returns (GetVapidResponse);
