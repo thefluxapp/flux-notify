@@ -88,8 +88,6 @@ mod create_web_push {
         type Error = AppError;
 
         fn try_from(req: CreateWebPushRequest) -> Result<Self, Self::Error> {
-            Uuid::parse_str("input")?;
-
             Ok(Self {
                 endpoint: req.endpoint().into(),
                 public_key: req.public_key().into(),

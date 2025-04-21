@@ -38,6 +38,7 @@ impl Vapid {
         endpoint: String,
         auth: Vec<u8>,
         public_key: Vec<u8>,
+        topic: String,
     ) -> Result<Response, Error> {
         // TODO: Swith to native instead of openssl
         let ciphertext = ece::encrypt(&public_key, &auth, &data)?;
@@ -57,7 +58,8 @@ impl Vapid {
             )
             .header(CONTENT_ENCODING, "aes128gcm")
             .header(CONTENT_TYPE, "application/octet-stream")
-            .header("TTL", self.ttl)
+            .header("topic", topic)
+            .header("ttl", self.ttl)
             .header(CONTENT_LENGTH, ciphertext.len())
             .body(ciphertext)
             .send()

@@ -1,0 +1,37 @@
+syntax = "proto3";
+package flux.events;
+
+import "google/protobuf/timestamp.proto";
+
+message Event {
+    oneof payload {
+        Message message = 1;
+    }
+
+    message Message {
+        optional string message_id = 101;
+        optional string text = 102;
+        optional string code = 103;
+        optional int64 order = 104;
+
+        optional User user = 501;
+        optional Stream stream = 502;
+
+        optional google.protobuf.Timestamp created_at = 901;
+        optional google.protobuf.Timestamp updated_at = 902;
+
+        message User {
+            optional string user_id = 101;
+            optional string first_name = 102;
+            optional string last_name = 103;
+            optional string name = 104;
+            optional string abbr = 105;
+            optional string color = 106;
+        }
+
+        message Stream {
+            optional string stream_id = 101;
+            optional string message_id = 102;
+        }
+    }
+}

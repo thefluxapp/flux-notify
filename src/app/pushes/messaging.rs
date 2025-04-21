@@ -44,6 +44,7 @@ pub async fn message(state: AppState) -> Result<(), Error> {
                     service::send_web_push::Request {
                         text: message.text().into(),
                         user_id: Uuid::parse_str(message.user_id())?,
+                        stream_id: Uuid::parse_str(stream.stream_id())?,
                         user_ids: stream
                             .user_ids
                             .into_iter()
@@ -54,9 +55,6 @@ pub async fn message(state: AppState) -> Result<(), Error> {
                     },
                 )
                 .await?;
-
-                // dbg!(&message);
-                // dbg!(&stream);
             }
 
             msg.ack().await.map_err(Error::msg)?;

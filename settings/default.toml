@@ -10,10 +10,20 @@ stream = "flux"
 [db]
 endpoint = "postgres://postgres:postgres@0.0.0.0:5432/flux-notify"
 
+[clients.flux_users]
+endpoint = ""
+
 [pushes.vapid]
-sub = "pushes@theflux.app"
+sub = "mailto:pushes@theflux.app"
 ttl = 3600
 
 [pushes.messaging.message]
 subjects = ["flux.messages.message"]
-consumer = "flux-notify-notify-message"
+consumer = "flux-notify-pushes"
+
+[events.messaging.message]
+subjects = ["flux.messages.message"]
+consumer = "flux-notify-events"
+
+[events.messaging.event]
+subject = "flux.notify.event"

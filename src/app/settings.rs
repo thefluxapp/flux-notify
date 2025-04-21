@@ -4,7 +4,7 @@ use config::{Config, ConfigError, Environment, File};
 use flux_lib::settings::{DBSettings, HttpSettings, NATSSettings};
 use serde::Deserialize;
 
-use super::pushes::settings::PushesSettings;
+use super::{events::settings::EventsSettings, pushes::settings::PushesSettings};
 
 #[derive(Deserialize, Clone)]
 pub struct AppSettings {
@@ -13,6 +13,18 @@ pub struct AppSettings {
     pub nats: NATSSettings,
     pub db: DBSettings,
     pub pushes: PushesSettings,
+    pub events: EventsSettings,
+    pub clients: ClientsSettings,
+}
+
+#[derive(Deserialize, Clone)]
+pub struct ClientsSettings {
+    pub flux_users: ClientSettings,
+}
+
+#[derive(Deserialize, Clone)]
+pub struct ClientSettings {
+    pub endpoint: String,
 }
 
 impl AppSettings {

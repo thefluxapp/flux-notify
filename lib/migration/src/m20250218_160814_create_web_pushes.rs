@@ -31,6 +31,16 @@ impl MigrationTrait for Migration {
             )
             .await?;
 
+        manager
+            .create_index(
+                Index::create()
+                    .name("web_pushes_user_id_idx")
+                    .table(WebPushes::Table)
+                    .col(WebPushes::UserId)
+                    .to_owned(),
+            )
+            .await?;
+
         Ok(())
     }
 

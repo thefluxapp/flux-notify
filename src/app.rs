@@ -7,6 +7,7 @@ use state::AppState;
 use tonic::service::Routes;
 
 mod error;
+mod events;
 mod pushes;
 mod settings;
 mod state;
@@ -39,13 +40,15 @@ async fn http_and_grpc(state: &AppState) -> Result<(), Error> {
 
     let listener = tokio::net::TcpListener::bind(&state.settings.http.endpoint).await?;
 
+    info!("app: started on {}", listener.local_addr()?);
     axum::serve(listener, router).await?;
 
     Ok(())
 }
 
 async fn messaging(state: &AppState) -> Result<(), Error> {
-    pushes::messaging(&state).await;
+    pushes::messaging(&state);
+    events::messaging(&state);
 
     info!("messaging: started");
 
