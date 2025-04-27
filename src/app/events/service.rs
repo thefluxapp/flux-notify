@@ -24,7 +24,7 @@ pub mod message {
     use bytes::Bytes;
     use flux_notify_api::{event, Event};
     use flux_users_api::GetUsersRequest;
-    use prost::Message;
+    use prost::Message as _;
     use prost_types::Timestamp;
 
     use crate::app::{error::AppError, state::UsersServiceChannel};
@@ -51,7 +51,7 @@ pub mod message {
 
     impl Request {
         pub fn try_into_bytes(self, user: &User) -> Result<Bytes, AppError> {
-            let message = event::Payload::Message(event::Message {
+            let message = event::Payload::Message(flux_notify_api::Message {
                 message_id: Some(self.message_id.into()),
                 text: Some(self.text),
                 code: Some(self.code),
@@ -72,7 +72,7 @@ pub mod message {
         }
     }
 
-    impl From<Stream> for flux_notify_api::event::message::Stream {
+    impl From<Stream> for flux_notify_api::message::Stream {
         fn from(stream: Stream) -> Self {
             Self {
                 stream_id: Some(stream.stream_id),
@@ -81,7 +81,7 @@ pub mod message {
         }
     }
 
-    impl From<&User> for event::message::User {
+    impl From<&User> for flux_notify_api::message::User {
         fn from(user: &User) -> Self {
             let user = &user.0;
 
