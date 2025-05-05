@@ -62,10 +62,7 @@ mod message {
         type Error = AppError;
 
         fn try_from(message: Message) -> Result<Self, Self::Error> {
-            let flux_messages_api::Message { message, stream } =
-                flux_messages_api::Message::decode(message.payload.as_ref())?;
-
-            let message = message.ok_or(AppError::Empty)?;
+            let message = flux_messages_api::Message::decode(message.payload.as_ref())?;
 
             Ok(Self {
                 message_id: message.message_id().into(),
@@ -73,7 +70,7 @@ mod message {
                 text: message.text().into(),
                 code: message.code().into(),
                 order: message.order(),
-                stream: match stream {
+                stream: match message.stream {
                     Some(stream) => Some(Stream {
                         stream_id: stream.stream_id().into(),
                         message_id: stream.message_id().into(),

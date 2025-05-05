@@ -34,10 +34,9 @@ pub async fn message(state: AppState) -> Result<(), Error> {
         if let Err(err) = async {
             let msg = msg.map_err(Error::msg)?;
 
-            let flux_messages_api::Message { message, stream } =
-                flux_messages_api::Message::decode(msg.payload.clone())?;
+            let message = flux_messages_api::Message::decode(msg.payload.clone())?;
 
-            if let (Some(message), Some(stream)) = (message, stream) {
+            if let Some(stream) = message.stream.clone() {
                 service::send_web_push(
                     &db,
                     &pushes_state.vapid,
