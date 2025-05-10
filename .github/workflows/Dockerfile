@@ -3,7 +3,7 @@ FROM rust:alpine AS builder
 WORKDIR /app
 
 COPY . .
-RUN apk --no-cache add musl-dev protoc protobuf-dev openssl-dev
+RUN apk --no-cache add musl-dev protoc protobuf-dev openssl-dev pkgconfig
 RUN cargo build --release -p flux-notify -p flux-notify-migration
 
 FROM alpine
