@@ -14,9 +14,9 @@ flux-users-api = { git = "https://github.com/thefluxapp/flux-users.git" }
 flux-messages-api = { git = "https://github.com/thefluxapp/flux-messages.git" }
 flux-lib = { git = "https://github.com/thefluxapp/flux-lib.git" }
 
-thiserror = "2.0.12"
+thiserror = "2.0.14"
 config = { version = "0.15", default-features = false, features = ["toml"] }
-uuid = { version = "1.16.0", features = ["v7"] }
+uuid = { version = "1.18.0", features = ["v7"] }
 chrono = "0.4.41"
 log = "0.4.27"
 jsonwebtoken = "9.3.1"
@@ -26,27 +26,29 @@ p256 = "0.13.2"
 
 axum = "0.8.4"
 
-async-nats = "0.40.0"
+async-nats = "0.42.0"
 
-tokio = { version = "1.44.2", features = ["full"] }
+tokio = { version = "1.47.1", features = ["full"] }
 tokio-stream = { version = "0.1.17", features = ["sync"] }
 
-reqwest = { version = "0.12.15", default-features = false, features = [
+reqwest = { version = "0.12.23", default-features = false, features = [
   "json",
   "rustls-tls",
 ] }
 
-prost = "0.13.5"
-prost-types = "0.13.5"
-tonic = { version = "0.13.1", default-features = false, features = ["channel"] }
-tonic-health = "0.13.1"
-tonic-reflection = "0.13.1"
+prost = "0.14.1"
+prost-types = "0.14.1"
 
-sea-orm = { version = "1.1.10", features = [
+tonic = { version = "0.14.1", default-features = false, features = ["channel"] }
+tonic-prost = "0.14.1"
+tonic-health = "0.14.1"
+tonic-reflection = "0.14.1"
+
+sea-orm = { version = "1.1.14", features = [
   "sqlx-postgres",
   "runtime-tokio-rustls",
 ] }
 
 serde = { version = "1.0.219", features = ["derive"] }
-serde_json = "1.0.140"
+serde_json = "1.0.142"
 bytes = "1.10.1"
